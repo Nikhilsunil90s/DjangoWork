@@ -3,4 +3,5 @@ from django.http import HttpResponse
 # Create your views here.
 
 def videoshome(request):
-    return HttpResponse("<h1 style='text-align:center;color:cyan;'>Welcome To Videos Page!</h1>")
+    #return HttpResponse("<h1 style='text-align:center;color:cyan;'>Welcome To Videos Page!</h1>")
+    return render(request , 'video/videoHome.html')

@@ -1,0 +1,24 @@
+{% load static %}
+{% include "home/header.html" %}
+{% block content %}
+<h1 class="text-center text-warning">Welcome To Blogs Page!</h1>
+{% for blog in blogs %}
+
+<ul>
+    <li>
+        <div class="card">
+            <div class="card-header">
+               <h3 class="text-center" style="color:brown"> {{ blog.blogTitle  }} </h3>
+            </div>
+            <div class="card-body">
+                <p class="text-center" style="font-weight: bold;"> {{ blog.blogContent }} </p>
+            </div>
+        </div>
+    </li>
+    <hr>
+</ul>
+
+
+{% endfor %}
+{% endblock %}
+{% include "home/footer.html" %}
