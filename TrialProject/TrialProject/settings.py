@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "home",
     "video",
     "blogs",
+    "quiz",
 ]
 
 MIDDLEWARE = [

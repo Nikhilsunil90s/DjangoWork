@@ -1,0 +1,54 @@
+{% load static %}
+{% include "home/header.html" %}
+
+{% block content %}
+<div class="container">
+    <p class="text-center"><h1>NOTE : </h1> Please Do Not Close This Window! </p>
+    <hr>
+    {% if FirstQuestion %}
+    <div class="text-center text-info">
+        <h3>{{ FirstQuestion }}</h3>
+        <pre>{{ FirstQuestion.quesDescription }}</pre>
+    </div>
+    {% else %}
+    <div class="text-center text-info">
+        <h3>{{ NextQuestion }}</h3>
+        <pre>{{ NextQuestion.quesDescription }}</pre>
+    </div>
+    {% endif %}
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+        <label class="form-check-label" for="flexRadioDefault1">
+          {{ QuesChoices.choice_1 }}
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+        <label class="form-check-label" for="flexRadioDefault1">
+          {{ QuesChoices.choice_2 }}
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+        <label class="form-check-label" for="flexRadioDefault1">
+          {{ QuesChoices.choice_3 }}
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+        <label class="form-check-label" for="flexRadioDefault1">
+          {{ QuesChoices.choice_4 }}
+        </label>
+    </div>
+    <br>
+    <p>
+        <a class="btn btn-primary" href="/quiz/question/{{ nextHits }}">Next</a>
+    </p>
+
+</div>
+
+
+
+{% endblock %}
+
+{% include "home/footer.html" %}
