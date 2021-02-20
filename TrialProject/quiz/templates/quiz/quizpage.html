@@ -5,48 +5,29 @@
 <div class="container">
     <p class="text-center"><h1>NOTE : </h1> Please Do Not Close This Window! </p>
     <hr>
-    {% if FirstQuestion %}
-    <div class="text-center text-info">
-        <h3>{{ FirstQuestion }}</h3>
-        <pre>{{ FirstQuestion.quesDescription }}</pre>
-    </div>
-    {% else %}
-    <div class="text-center text-info">
-        <h3>{{ NextQuestion }}</h3>
-        <pre>{{ NextQuestion.quesDescription }}</pre>
-    </div>
-    {% endif %}
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-        <label class="form-check-label" for="flexRadioDefault1">
-          {{ QuesChoices.choice_1 }}
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-        <label class="form-check-label" for="flexRadioDefault1">
-          {{ QuesChoices.choice_2 }}
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-        <label class="form-check-label" for="flexRadioDefault1">
-          {{ QuesChoices.choice_3 }}
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-        <label class="form-check-label" for="flexRadioDefault1">
-          {{ QuesChoices.choice_4 }}
-        </label>
-    </div>
-    <br>
-    <p>
-        <a class="btn btn-primary" href="/quiz/question/{{ nextHits }}">Next</a>
-    </p>
-
+    {{ Questions }}   
 </div>
-
+{% if Questions.has_other_pages %}
+  <ul class="pagination">
+    {% if Questions.has_previous %}
+      <li><a href="?page={{ Questions.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in ques.paginator.page_range %}
+      {% if ques.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if ques.has_next %}
+      <li><a href="?page={{ Questions.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
 
 
 {% endblock %}

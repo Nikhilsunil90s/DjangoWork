@@ -11,6 +11,8 @@ class Question(models.Model):
     def __str__(self):
         return self.quesTitle
 
+    
+
 class Choice(models.Model):
     ques = models.ForeignKey('Question' , on_delete = models.CASCADE)
     choice_1 = models.CharField(max_length=100)

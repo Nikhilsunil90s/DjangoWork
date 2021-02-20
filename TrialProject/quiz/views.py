@@ -1,27 +1,30 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Question, Choice
+from django.core.paginator import Paginator
+from django.views.generic.list import ListView
 # Create your views here.
-nextHits = 1
+
+class QuestionView(ListView):
+    model = Question
+    template_name = 'question_list.html'
+    paginate_by = 1
+    context_object_name = 'QuestionContext'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = Paginator(Question.objects.all(), self.paginate_by)
+        page = self.request.GET.get('page')
+        #pp = paginator.page(page)
+        if page:
+            context['Choices'] = Choice.objects.get(ques = page)
+        else:
+            context['Choices'] = Choice.objects.get(ques = Question.objects.all()[0].quesId)
+        return context
+
+
 
 def quizHome(request):
     return render(request , 'quiz/quizhome.html')
 
 
-def startQuiz(request):
-    global nextHits
-    print(nextHits)
-    nextHits += 1
-    results = Question.objects.all()
-    choices = Choice.objects.get(ques = results[0].quesId)
-    print(choices.choice_1)
-    return render(request , 'quiz/quizpage.html' , {'FirstQuestion' : results[0] , 'QuesChoices' : choices , 'nextHits' : nextHits})
-
-def showQues(request , quesid):
-    global nextHits
-    print(nextHits)
-    nextHits += 1
-    quest = Question.objects.get(quesId = quesid)
-    questChoice = Choice.objects.get(ques = quesid)
-    #return HttpResponse("<h1>" + str(quesid) + " : " + str(ques) + "</h1>")
-    return render(request , 'quiz/quizpage.html' , {'NextQuestion' : quest , 'QuesChoices' : questChoice , 'nextHits' : nextHits})
