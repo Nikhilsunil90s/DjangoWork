@@ -2,6 +2,7 @@
 {% include "home/header.html" %}
 
 {% block content %}
+
 <div class="container">
  {% for question in page_obj %}
     <h1 class="text-center">{{ question.quesTitle }}</h1>
@@ -10,24 +11,35 @@
  {% if Choices %}
  <div class="row">
      <div class="col-lg-12 text-center">
+         <form id="inputForm" method="POST"> 
          <ul style="list-style: none;">
              <li>
-                <input type="radio" value="{{ Choices.choice_1 }}" name="choiceselected">
-                <label for = "">{{ Choices.choice_1 }}</label>
+                <input type="radio" value="{{ Choices.choice_1 }}" id="inpRadio" name="choiceselected">
+                <label for = "inpRadio">{{ Choices.choice_1 }}</label>
              </li>
              <li>
-                <input type="radio" value="{{ Choices.choice_2 }}" name="choiceselected">
-                 <label for = "">{{ Choices.choice_2 }}</label>
+                <input type="radio" value="{{ Choices.choice_2 }}" id="inpRadio" name="choiceselected">
+                 <label for = "inpRadio">{{ Choices.choice_2 }}</label>
             </li>
             <li>
-                <input type="radio" value="{{ Choices.choice_3 }}" name="choiceselected">
-                <label for = "">{{ Choices.choice_3 }}</label>
+                <input type="radio" value="{{ Choices.choice_3 }}" id="inpRadio" name="choiceselected">
+                <label for = "inpRadio">{{ Choices.choice_3 }}</label>
             </li>
             <li>
-                <input type="radio" value="{{ Choices.choice_4 }}" name="choiceselected">
-                <label for = "">{{ Choices.choice_4 }}</label>
+                <input type="radio" value="{{ Choices.choice_4 }}" id="inpRadio" name="choiceselected">
+                <label for = "inpRadio">{{ Choices.choice_4 }}</label>
             </li>
          </ul>
+         </form>
+         {% if result %}
+         <h4 id="result">
+            {% if result == Choices.correctChoice %}
+            <pre>True</pre>
+            {% else %}
+            <pre>False</pre>
+            {% endif %}
+        </h4>
+         {% endif %}
      </div>
  </div>
  {% endif %}
@@ -35,7 +47,7 @@
  <div class="row">
  {% if page_obj.has_previous %}
  <div class="col-lg-4 text-center">
-    <a class="btn btn-primary" href="?page={{ page_obj.previous_page_number }}">Prev.</a>
+    <a class="btn btn-primary" href="?page={{ page_obj.previous_page_number }}" onclick="hitForm()">Prev.</a>
  </div>
  {% endif %}
  <div class="col-lg-4 text-center">
@@ -45,10 +57,24 @@
  </div>
  {% if page_obj.has_next %}
  <div class="col-lg-4 text-center">
-    <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Next</a>
+    <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}" onclick="hitForm()">Next</a>
  </div>
  {% endif %}
  </div>
+ <script>
+    function hitForm() {
+        //alert("Performed...");
+        const inpList = document.getElementsByName('choiceselected');
+        const inpArr = [];
+        for(let i = 0; i < inpList.length ; i++){
+            if(inpList[i].checked){
+                //alert(inpList[i].value);
+                document.getElementById('result').innerHTML = inpList[i].value;
+                inpList[i].value = "{{ result }}"
+            }
+        }
+    }
+    </script>
 {% endblock %}
 
 {% include "home/footer.html" %}

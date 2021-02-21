@@ -15,11 +15,14 @@ class QuestionView(ListView):
         context = super().get_context_data(**kwargs)
         paginator = Paginator(Question.objects.all(), self.paginate_by)
         page = self.request.GET.get('page')
+        #print(self.request.build_absolute_uri())
         #pp = paginator.page(page)
         if page:
             context['Choices'] = Choice.objects.get(ques = page)
+            context['result'] = ''
         else:
             context['Choices'] = Choice.objects.get(ques = Question.objects.all()[0].quesId)
+            context['result'] = ''
         return context
 
 
