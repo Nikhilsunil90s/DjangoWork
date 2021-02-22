@@ -30,16 +30,7 @@
                 <label for = "inpRadio">{{ Choices.choice_4 }}</label>
             </li>
          </ul>
-         </form>
-         {% if result %}
-         <h4 id="result">
-            {% if result == Choices.correctChoice %}
-            <pre>True</pre>
-            {% else %}
-            <pre>False</pre>
-            {% endif %}
-        </h4>
-         {% endif %}
+         </form>       
      </div>
  </div>
  {% endif %}
@@ -62,15 +53,28 @@
  {% endif %}
  </div>
  <script>
+    let correctAnswers = localStorage.getItem('correctAnswers') ?  localStorage.getItem('correctAnswers') : 0;
     function hitForm() {
         //alert("Performed...");
+        //alert(correctAnswers);
         const inpList = document.getElementsByName('choiceselected');
         const inpArr = [];
         for(let i = 0; i < inpList.length ; i++){
             if(inpList[i].checked){
                 //alert(inpList[i].value);
-                document.getElementById('result').innerHTML = inpList[i].value;
-                inpList[i].value = "{{ result }}"
+                //document.getElementById('result').innerHTML = inpList[i].value;
+                //alert(inpList[i].value);
+                var a = inpList[i].value;
+                var b = "{{ Choices.correctChoice }}"
+                alert(a);
+                alert(b);
+                if(a === b) {
+                    let cA = parseInt(correctAnswers) + 1
+                    localStorage.setItem('correctAnswers' , cA);
+                }
+                else{
+                    //alert("Incorrect!");
+                }
             }
         }
     }
