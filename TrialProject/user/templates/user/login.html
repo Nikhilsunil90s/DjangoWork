@@ -1,0 +1,24 @@
+{% load static %}
+{% load crispy_forms_tags %}
+{% include "home/header.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="text-center">
+        <h2>Login Here ... </h2>
+        {% if messages %}
+        <pre>{{ messages.text }}</pre>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ AuthenticationForm|crispy }}
+            <hr>
+            <input type="submit" value="Login" class="btn btn-danger">
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% include "home/footer.html" %}
